@@ -10,8 +10,9 @@ let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopEl
 
 for window in windows {
 	let windowOwnerPID = window[kCGWindowOwnerPID as String] as! Int
+	let windowOwnerName = window[kCGWindowOwnerName as String] as? String ?? ""
 
-	if windowOwnerPID != frontmostAppPID {
+	if (windowOwnerPID != frontmostAppPID && !windowOwnerName.hasPrefix("com.apple.appkit.xpc")) {
 		continue
 	}
 
