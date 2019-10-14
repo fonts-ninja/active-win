@@ -6,19 +6,15 @@ func toJson<T>(_ data: T) throws -> String {
 }
 
 let frontmostAppPID = NSWorkspace.shared.frontmostApplication!.processIdentifier
-let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as! [[String: Any]]
+let windows = CGWindowListCopyWindowInfo([.optionAll, .excludeDesktopElements], kCGNullWindowID) as! [[String: Any]]
 
 for window in windows {
 	let windowOwnerPID = window[kCGWindowOwnerPID as String] as! Int
 	let windowOwnerName = window[kCGWindowOwnerName as String] as? String ?? ""
-	
-	if windowOwnerName == "Dock" {
+
+	if (windowOwnerPID != frontmostAppPID && !windowOwnerName.hasPrefix("com.apple.appkit.xpc")) {
 		continue
 	}
-
-	//if (windowOwnerPID != frontmostAppPID && !windowOwnerName.hasPrefix("com.apple.appkit.xpc")) {
-	//	continue
-	//}
 
 	// Skip transparent windows, like with Chrome
 	if (window[kCGWindowAlpha as String] as! Double) == 0 {
