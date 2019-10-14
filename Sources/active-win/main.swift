@@ -10,7 +10,7 @@ let windows = CGWindowListCopyWindowInfo([.optionAll, .excludeDesktopElements], 
 
 for window in windows {
 	let windowOwnerPID = window[kCGWindowOwnerPID as String] as! Int
-	let windowOwnerName = window[kCGWindowOwnerName as String] as? String ?? ""
+	let windowOwnerName = window[kCGWindowOwnerName as String] as! String
 
 	if (windowOwnerPID != frontmostAppPID && !windowOwnerName.hasPrefix("com.apple.appkit.xpc")) {
 		continue
@@ -37,8 +37,6 @@ for window in windows {
 	let dict: [String: Any] = [
 		"title": window[kCGWindowName as String] as? String ?? "",
 		"id": window[kCGWindowNumber as String] as! Int,
-		"type": windowOwnerName,
-		"prefix": windowOwnerName.hasPrefix("com.apple.appkit.xpc"),
 		"bounds": [
 			"x": bounds.origin.x,
 			"y": bounds.origin.y,
