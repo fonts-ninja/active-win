@@ -44,7 +44,7 @@ for window in windows {
 			"height": bounds.height
 		],
 		"owner": [
-			"name": window[kCGWindowOwnerName as String] as! String,
+			"name": windowOwnerName,
 			"processId": appPid,
 			"bundleId": app.bundleIdentifier!,
 			"path": app.bundleURL!.path
