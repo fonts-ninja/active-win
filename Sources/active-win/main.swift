@@ -36,6 +36,7 @@ for window in windows {
 	let dict: [String: Any] = [
 		"title": window[kCGWindowName as String] as? String ?? "",
 		"id": window[kCGWindowNumber as String] as! Int,
+		"type": window[kCGWindowOwnerName as String] as? String ?? "",
 		"bounds": [
 			"x": bounds.origin.x,
 			"y": bounds.origin.y,
